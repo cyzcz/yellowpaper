@@ -146,6 +146,36 @@ def main() -> int:
             halving,
             Fraction(meta["halving_interval_days"]) * Fraction(meta["blocks_per_day"]),
         ),
+        (
+            "1-day block windows == blocks_per_day (86,400)",
+            Fraction(params["reward_distribution_period_blocks"])
+            + Fraction(params["poui_submission_window_blocks"])
+            + Fraction(params["agent_cap_window_blocks"])
+            + Fraction(params["blackout_revoke_blocks"])
+            + Fraction(params["validator_work_recency_window_blocks"])
+            + Fraction(params["validator_extended_downtime_blocks"]),
+            6 * Fraction(meta["blocks_per_day"]),
+        ),
+        (
+            "7-day block windows == 7 x blocks_per_day (604,800)",
+            Fraction(params["miner_unbonding_blocks"])
+            + Fraction(params["miner_stake_revocation_latency_blocks"])
+            + Fraction(params["calibration_lease_blocks"])
+            + Fraction(params["ejection_cooldown_blocks"])
+            + Fraction(params["channel_dispute_window_blocks"])
+            + Fraction(params["emergency_override_cooldown"])
+            + Fraction(params["governance_vote_locking_period"]),
+            7 * 7 * Fraction(meta["blocks_per_day"]),
+        ),
+        (
+            "14/21/30/90-day block windows == days x blocks_per_day",
+            Fraction(params["da_ephemeral_retention_blocks"])
+            + Fraction(params["protocol_upgrade_enactment_timelock"])
+            + Fraction(params["validator_unbonding_blocks"])
+            + Fraction(params["validator_rotation_interval_blocks"])
+            + Fraction(params["airdrop_vesting_duration_blocks"]),
+            (14 + 14 + 21 + 30 + 90) * Fraction(meta["blocks_per_day"]),
+        ),
     ]
 
     # Inequalities, kept separate from the equalities above.
