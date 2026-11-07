@@ -240,13 +240,17 @@ def _check_record(record: TurnRecord) -> None:
     toploc_nonzero = record.toploc_commitment_hash is not None and any(
         record.toploc_commitment_hash
     )
-    if record.leaf_version in (TranscriptLeafVersion.V0, TranscriptLeafVersion.V1):
+    timing_nonzero = any((record.miner_recv_ms, record.miner_done_ms, record.latency_ms))
+    if record.leaf_version == TranscriptLeafVersion.V0:
+        if record.decode_policy_hash is not None or ids_nonzero or toploc_nonzero or timing_nonzero:
+            raise ValueError("V0 fields are inconsistent")
+    elif record.leaf_version == TranscriptLeafVersion.V1:
         if record.decode_policy_hash is not None or ids_nonzero or toploc_nonzero:
             raise ValueError("V0/V1 fields are inconsistent")
     elif record.leaf_version == TranscriptLeafVersion.V2:
         if record.decode_policy_hash is None or ids_nonzero or toploc_nonzero:
             raise ValueError("V2 fields are inconsistent")
-    elif record.decode_policy_hash is None or not ids_nonzero:
+    elif record.decode_policy_hash is None or not ids_nonzero or not toploc_nonzero:
         raise ValueError("V3 fields are inconsistent")
 
 
