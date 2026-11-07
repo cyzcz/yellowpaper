@@ -49,15 +49,27 @@ _CATEGORY_SECTION = {
     "Compute-channel timing bounds": "sec-12-1",
     "Sessions / capacity reservations (A1 anti-spam)": "sec-12-2",
     "Finality-stall safe mode (compute-channel)": "sec-13-0",
+    "PoUI simulator-mode safety flag (#297 CRIT-02 / RT-C02)": "sec-3-6",
+    "D-0528 sponsor-owned registration bonds (devnet/testnet only)": "sec-6-1",
+    "PoUI submission rate limit": "sec-1-2",
     "F2 supply-side governor (default OFF; governance-settable)": "sec-9",
     "Governance": "sec-14-1",
     "Consensus / finality committee": "sec-15-4",
     "Validator security policy": "sec-15-5",
     "Metering tripwire": "sec-4-2",
     "Compute-channel settlement": "sec-12-1",
+    "Derived TOPLOC band (governance-set per model/precision; #685, #705)": "sec-3-4",
+    "Model registry (decode-policy sets)": "sec-3-3",
+    "Metering cert tokens-per-byte band (#871)": "sec-4",
+    "Metering cert circuit version + guest image-id registry (#929)": "sec-4",
     "Transaction fees (live values)": "sec-9-1",
     "Data availability": "sec-5-3",
     "Agent wallet / session keys": "sec-6-2",
+    "Designed-not-built degraded-state limits": "sec-13-0",
+    "Governance-transition guard magnitudes (PR #133)": "sec-14-1",
+    "DA (documented; single-site design/const, yellowpaper §5.3)": "sec-5-3",
+    "Slashing fractions by fault class (documented; yellowpaper §11/§13.2)": "sec-13-2",
+    "Agent wallet / session keys / vesting (documented; yellowpaper §6.2/§8)": "sec-6-2",
 }
 
 
@@ -106,13 +118,15 @@ def _cell(text: str) -> str:
 # yellowpaper link-checker scans the whole doc for these and fails on any that don't resolve, so the
 # generated table must not reproduce them — strip the tokens in place (keeping the human prose).
 _ARTIFACT_FILE = re.compile(r"\b[\w/.-]+\.(?:lean|qnt|jl|rs|ts|py)\b")
-_ARTIFACT_SYM = re.compile(r"::[\w.']+")
+_ARTIFACT_SYM = re.compile(r"::[\w.']*[\w']")
 
 
 def _strip_artifacts(text: str) -> str:
     text = _ARTIFACT_FILE.sub("", text)
     text = _ARTIFACT_SYM.sub("", text)
+    text = re.sub(r"\bin\s+(?=[.,;)(])", "", text)  # drop dangling 'in' before stripped filename
     text = re.sub(r"\s+([.,;)])", r"\1", text)  # tidy space left before punctuation
+    text = re.sub(r"\.\.+", ".", text)  # collapse double periods from stripped trailing filename
     text = re.sub(r"\(\s*\)", "", text)  # drop emptied parens
     return " ".join(text.split()).strip(" ,;·-")
 
@@ -243,7 +257,7 @@ def render() -> str:
         lines.append("")
         lines.append(header)
         lines.append(sep)
-        lines.extend(_row(p, sections) for p in reference)
+        lines.extend(_row(p, sections, cats.get(p["name"], "")) for p in reference)
         lines.append("")
 
     lines.extend(_cross_language_table(enforced + reference))

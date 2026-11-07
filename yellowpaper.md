@@ -2814,21 +2814,21 @@ Enforced parameters (`params/flop-protocol-params.yaml`); every value below is m
 | <a id="param-finality_freeze_threshold"></a>`finality_freeze_threshold` | 120 blocks | [§13.0](#130-degraded-state-settlement-policy-normative) |  | Finality lag at/above which the channel enters Stalled: new finality-dependent opens are rejected fail-closed (ensure_finality_open_allowed); additive top-up/cancel paths stay open. |
 | <a id="param-max_finality_stall"></a>`max_finality_stall` | 3_600 blocks | [§13.0](#130-degraded-state-settlement-policy-normative) |  | Finality lag at/above which the chain is EscapeEligible (safe mode): restore AlephBFT finality or ratify a checkpoint recovery through the hard-fork runbook. ~1h at 1s blocks. |
 | <a id="param-htlc_timelock_symmetry_safety_margin_percent"></a>`htlc_timelock_symmetry_safety_margin_percent` | 20 percent | [§10.1](#101-requirements) |  | Minimum foreign-chain HTLC safety margin as a percentage of the foreign duration, after converting it to one-second FLOP blocks. |
-| <a id="param-htlc_burn_share_ppt"></a>`htlc_burn_share_ppt` | 0 ppt | [§13.0](#130-degraded-state-settlement-policy-normative) |  | Share of a finalized post-timeout HTLC resolution burned before payout. |
+| <a id="param-htlc_burn_share_ppt"></a>`htlc_burn_share_ppt` | 0 ppt | [§10.1](#101-requirements) |  | Share of a finalized post-timeout HTLC resolution burned before payout. |
 | <a id="param-btc_block_time_flop_blocks"></a>`btc_block_time_flop_blocks` | 600 blocks | [§10.1](#101-requirements) |  | Average Bitcoin block interval expressed in one-second FLOP blocks. |
 
 **PoUI simulator-mode safety flag (#297 CRIT-02 / RT-C02)**
 
 | Parameter | Value | § | Decision | Description |
 |-----------|-------|---|----------|-------------|
-| <a id="param-poui_allow_simulator_mode"></a>`poui_allow_simulator_mode` | cfg!(feature = "volta") flag |  |  | #297: AllowSimulatorMode gates the TEE-free simulator credit path; derived from the `volta` devnet feature so production runtimes fail closed. |
+| <a id="param-poui_allow_simulator_mode"></a>`poui_allow_simulator_mode` | cfg!(feature = "volta") flag | [§3.6](#36-tier-4--on-chain-settlement-zk-aggregation--validator-bft-quorum) |  | #297: AllowSimulatorMode gates the TEE-free simulator credit path; derived from the `volta` devnet feature so production runtimes fail closed. |
 | <a id="param-paid_storage_enabled"></a>`paid_storage_enabled` | cfg!(feature = "paid-storage-unratified") flag | [§5.4](#54-agent-memory-and-paid-data-storage) |  | Build-time gate for the unratified paid agent-storage pallet (yellowpaper §5.4, R5.4k). |
 
 **D-0528 sponsor-owned registration bonds (devnet/testnet only)**
 
 | Parameter | Value | § | Decision | Description |
 |-----------|-------|---|----------|-------------|
-| <a id="param-sponsored_self_stake_enabled"></a>`sponsored_self_stake_enabled` | cfg!(feature = "sponsored-self-stake") flag |  | D-0528 | D-0528: active sponsored principal counts toward the miner capacity bond and the validator effective minimum, and sponsors may post an operator's whole registration bond (sponsor_register_miner / sponsor_register_validator). |
+| <a id="param-sponsored_self_stake_enabled"></a>`sponsored_self_stake_enabled` | cfg!(feature = "sponsored-self-stake") flag | [§6.1](#61-primitives) | D-0528 | D-0528: active sponsored principal counts toward the miner capacity bond and the validator effective minimum, and sponsors may post an operator's whole registration bond (sponsor_register_miner / sponsor_register_validator). |
 
 **PoUI submission rate limit**
 
@@ -2921,17 +2921,17 @@ Enforced parameters (`params/flop-protocol-params.yaml`); every value below is m
 
 | Parameter | Value | § | Decision | Description |
 |-----------|-------|---|----------|-------------|
-| <a id="param-toploc_band_constants_fields"></a>`toploc_band_constants_fields` | kappa_profile_hash structural |  |  | Per-(model, precision) derived TOPLOC band committed constants consumed by band_verdict / report_toploc_mismatch: kappa_profile_hash, band_tau_accept, band_tau_slash, challenge_k, challenge_window_w. |
-| <a id="param-toploc_band_tau_accept_bf16_milli"></a>`toploc_band_tau_accept_bf16_milli` | 2_900 milli_exponent_error |  |  | Derived bf16 accept threshold τ_accept≈2.9 exponent errors in milli units (×1000). |
-| <a id="param-toploc_band_tau_slash_bf16_milli"></a>`toploc_band_tau_slash_bf16_milli` | 185_600 milli_exponent_error |  |  | Derived bf16 slash threshold τ_slash≈185.6 exponent errors in milli units (×1000). |
-| <a id="param-toploc_band_eng29_threshold_milli"></a>`toploc_band_eng29_threshold_milli` | 38_000 milli_exponent_error |  |  | ENG-29 empirically-deployed exponent-error threshold (38) in milli units. |
-| <a id="param-toploc_band_kappa_within_llama31_8b_bf16"></a>`toploc_band_kappa_within_llama31_8b_bf16` | 4.5 dimensionless |  |  | Fitted/selected within-layer κ for Llama-3.1-8B bf16 (ENG-29). |
+| <a id="param-toploc_band_constants_fields"></a>`toploc_band_constants_fields` | kappa_profile_hash structural | [§3.4](#34-tier-2--toploc-activation-commitments-mandatory-floor) |  | Per-(model, precision) derived TOPLOC band committed constants consumed by band_verdict / report_toploc_mismatch: kappa_profile_hash, band_tau_accept, band_tau_slash, challenge_k, challenge_window_w. |
+| <a id="param-toploc_band_tau_accept_bf16_milli"></a>`toploc_band_tau_accept_bf16_milli` | 2_900 milli_exponent_error | [§3.4](#34-tier-2--toploc-activation-commitments-mandatory-floor) |  | Derived bf16 accept threshold τ_accept≈2.9 exponent errors in milli units (×1000). |
+| <a id="param-toploc_band_tau_slash_bf16_milli"></a>`toploc_band_tau_slash_bf16_milli` | 185_600 milli_exponent_error | [§3.4](#34-tier-2--toploc-activation-commitments-mandatory-floor) |  | Derived bf16 slash threshold τ_slash≈185.6 exponent errors in milli units (×1000). |
+| <a id="param-toploc_band_eng29_threshold_milli"></a>`toploc_band_eng29_threshold_milli` | 38_000 milli_exponent_error | [§3.4](#34-tier-2--toploc-activation-commitments-mandatory-floor) |  | ENG-29 empirically-deployed exponent-error threshold (38) in milli units. |
+| <a id="param-toploc_band_kappa_within_llama31_8b_bf16"></a>`toploc_band_kappa_within_llama31_8b_bf16` | 4.5 dimensionless | [§3.4](#34-tier-2--toploc-activation-commitments-mandatory-floor) |  | Fitted/selected within-layer κ for Llama-3.1-8B bf16 (ENG-29). |
 
 **Model registry (decode-policy sets)**
 
 | Parameter | Value | § | Decision | Description |
 |-----------|-------|---|----------|-------------|
-| <a id="param-max_decode_policies_per_model"></a>`max_decode_policies_per_model` | 32 count |  |  | Maximum decode-policy hashes pinnable in a model's optional allowed set (BoundedDecodePolicySet = BoundedVec<H256, ConstU32<MAX_DECODE_POLICIES_PER_MODEL>>). |
+| <a id="param-max_decode_policies_per_model"></a>`max_decode_policies_per_model` | 32 count | [§3.3](#33-tier-1--tee-attestation--measuring-model_hash-optional--hard-tier) |  | Maximum decode-policy hashes pinnable in a model's optional allowed set (BoundedDecodePolicySet = BoundedVec<H256, ConstU32<MAX_DECODE_POLICIES_PER_MODEL>>). |
 
 **Metering cert tokens-per-byte band (#871)**
 
@@ -2943,8 +2943,8 @@ Enforced parameters (`params/flop-protocol-params.yaml`); every value below is m
 
 | Parameter | Value | § | Decision | Description |
 |-----------|-------|---|----------|-------------|
-| <a id="param-metering_cert_circuit_version"></a>`metering_cert_circuit_version` | 3 version |  |  | Governance-pinned circuit layout the metering cert proves against (V3 transcript leaf, #929). |
-| <a id="param-metering_cert_guest_image_id"></a>`metering_cert_guest_image_id` | OptionQuery storage-default |  |  | Governance-pinned RISC0 guest image id for the metering cert (safety zone, #945). |
+| <a id="param-metering_cert_circuit_version"></a>`metering_cert_circuit_version` | 3 version | [§4](#4-effective-flop-metering) |  | Governance-pinned circuit layout the metering cert proves against (V3 transcript leaf, #929). |
+| <a id="param-metering_cert_guest_image_id"></a>`metering_cert_guest_image_id` | OptionQuery storage-default | [§4](#4-effective-flop-metering) |  | Governance-pinned RISC0 guest image id for the metering cert (safety zone, #945). |
 
 **Transaction fees (live values)**
 
@@ -2982,13 +2982,13 @@ Enforced parameters (`params/flop-protocol-params.yaml`); every value below is m
 |-----------|-------|---|----------|-------------|
 | <a id="param-validator_min_self_stake_ratio_percent"></a>`validator_min_self_stake_ratio_percent` | 20 percent | [§15.2](#152-onboarding-normative) |  | Legacy minimum validator self-stake ratio when sponsored backing is enabled (§15.2). |
 | <a id="param-validator_work_recency_window_blocks"></a>`validator_work_recency_window_blocks` | 86_400 blocks | [§15.2](#152-onboarding-normative) |  | Accepted verification-duty recency window for PoUI committee eligibility (§15.2, R15.4c). |
-| <a id="param-protocol_upgrade_approval"></a>`protocol_upgrade_approval` | 67 percent | [§14.2](#142-fip-binding) | GOV-A | Production protocol_upgrade (Root) track approval (flat BFT 2/3); live as APP_ROOT in (enforced above as governance_root_track_approval + protocol_upgrade_support_floor). |
+| <a id="param-protocol_upgrade_approval"></a>`protocol_upgrade_approval` | 67 percent | [§14.2](#142-fip-binding) | GOV-A | Production protocol_upgrade (Root) track approval (flat BFT 2/3); live as APP_ROOT (enforced above as governance_root_track_approval + protocol_upgrade_support_floor). |
 | <a id="param-protocol_upgrade_decision_period"></a>`protocol_upgrade_decision_period` | 28 days | [§14.2](#142-fip-binding) |  | [RATIFY] deliberation window for the protocol_upgrade track. yellowpaper §14.2. |
 | <a id="param-protocol_upgrade_enactment_timelock"></a>`protocol_upgrade_enactment_timelock` | 1_209_600 blocks | [§14.1](#141-requirements) |  | 14 d at 1s — Scheduler min_enactment_period (upgrade timelock). yellowpaper §14.1. |
 | <a id="param-fip_decision_deposit"></a>`fip_decision_deposit` | RATIFY FLOP | [§14.2](#142-fip-binding) |  | [RATIFY] decision-deposit spam barrier for protocol_upgrade referenda (FLOP-denominated; magnitude TBD). yellowpaper §14.2. |
 | <a id="param-emergency_override_timelock"></a>`emergency_override_timelock` | 259_200 blocks |  | SPEC-015 | 72 h at 1s — pallet_emergency_override break-glass timelock (root-only). |
 | <a id="param-emergency_override_cooldown"></a>`emergency_override_cooldown` | 604_800 blocks |  | SPEC-015 | 7 d at 1s — minimum gap between emergency overrides. |
-| <a id="param-governance_vote_locking_period"></a>`governance_vote_locking_period` | 604_800 blocks |  |  | 7 d conviction VoteLockingPeriod (pallet_conviction_voting, live).. |
+| <a id="param-governance_vote_locking_period"></a>`governance_vote_locking_period` | 604_800 blocks |  |  | 7 d conviction VoteLockingPeriod (pallet_conviction_voting, live). |
 | <a id="param-sudo_pallet_index"></a>`sudo_pallet_index` | 50 index | [§14.1](#141-requirements) | GOV-B | pallet_sudo — bootstrap Root through devnet/testnet; REMOVED/neutered at the mainnet-genesis handoff (GOV-B). yellowpaper §14.1. |
 | <a id="param-subsidy_total_per_block"></a>`subsidy_total_per_block` | 16 FLOP | [§9](#9-emission--supply) | D-0436 | 8 Labs + 8 Foundation in halving era 0 (years 1-2), on top of the 96 FLOP reward (yellowpaper §9); halves with the reward (`era(b) = ⌊b / H⌋`: 16 -> 8 -> 4 -> 2 -> 1 combined) and is exactly 0 from era 5 (`b = 315,360,000`), where the reward floors. |
 | <a id="param-emission_at_end_of_era6"></a>`emission_at_end_of_era6` | 12_109_823_904 FLOP |  | D-0436 | 2·R₀·H − R₀ = 12,109,823,904 (2·R₀·H = 12,109,824,000 before subtracting unrewarded genesis block 0, R9.7), reached at the end of era 6 (block 441,503,999, ~year 14) under max_halvings=5 — one era earlier than the superseded maxHalvings=6 put it (hence the rename from emission_at_end_of_era7). |
@@ -2996,14 +2996,14 @@ Enforced parameters (`params/flop-protocol-params.yaml`); every value below is m
 | <a id="param-floor_annual_emission"></a>`floor_annual_emission` | 94_608_000 FLOP |  | D-0436 | perpetual floor tail: 3 FLOP/block × 31,536,000 blocks/yr (= 189,216,000 FLOP/era). |
 | <a id="param-max_delegators_per_miner"></a>`max_delegators_per_miner` | 10_000 count | [§6.1](#61-primitives) | D-0530 | [DEPRECATED — D-0530] Superseded by operator self-stake-only ruling (§6.1, §15.2); legacy MinerStaking.MaxDelegatorsPerMiner constant retained pending pallet cleanup. |
 | <a id="param-agent_daily_cap_autonomous"></a>`agent_daily_cap_autonomous` | 500 FLOP | [§6.2](#62-agent-autonomy--operating-without-per-action-consensus) |  | Autonomous-agent scenario daily cap in the simulator; the runtime stores each wallet's chosen daily_cap at create_wallet rather than enforcing a global 500 FLOP constant; yellowpaper §6.2. |
-| <a id="param-agent_per_tx_limit"></a>`agent_per_tx_limit` | 100 FLOP |  |  |  |
+| <a id="param-agent_per_tx_limit"></a>`agent_per_tx_limit` | 100 FLOP | [§6.2](#62-agent-autonomy--operating-without-per-action-consensus) |  | Per-transaction spend limit for an autonomous agent session in the simulator; the runtime stores each session's chosen per_tx_limit at create_session rather than enforcing a global 100 FLOP constant. yellowpaper §6.2. |
 | <a id="param-attestation_outage_pause_cap_blocks"></a>`attestation_outage_pause_cap_blocks` | 14_400 blocks | [§13.0](#130-degraded-state-settlement-policy-normative) |  | Designed-not-built 4 h cap on per-channel pauses of attestation-dependent clocks under R13.0e / O1; no runtime or pallet implementation site. yellowpaper §13.0. |
-| <a id="param-da_endpoint_deposit"></a>`da_endpoint_deposit` | VFY (= 1 FLOP) |  |  | Refundable anti-spam deposit held while a validator's DA serving endpoint announcement exists in DaRegistry 1 VFY = 1 FLOP. Held under HoldReason; released in full on clear_endpoint. |
-| <a id="param-da_max_endpoint_bytes"></a>`da_max_endpoint_bytes` | 256 bytes |  |  | Maximum UTF-8 byte length of a validator DA serving endpoint URL stored in DaRegistry (e.g. 'http://host:7000'). |
-| <a id="param-validator_stake_value_coupled_floor"></a>`validator_stake_value_coupled_floor` | dynamic FLOP |  | D-0413 | D-0413 (C5): governance-retargeted value-coupled stake floor k·V_booked (storage ValueCoupledStakeFloor, default 0 = baseline-identical). |
-| <a id="param-security_kappa_extractable"></a>`security_kappa_extractable` | 0.2 dimensionless |  | DEC-5 | ASSUMPTION — NOT a theorem; a governance/DEC-5 risk input. κ = fraction of realized value V_booked a successful AlephBFT safety break extracts; the lever the value-coupled stake floor rests on (k ≥ m·κ/(θ·N·σ·δ), linear in κ — k_threshold_scales_with_kappa). |
-| <a id="param-da_deposit_max_step_factor"></a>`da_deposit_max_step_factor` | 100 ratio |  |  | pallet_da_registry MAX_DEPOSIT_STEP_FACTOR: a single set_deposit_per_byte call may move the deposit ≤100× in either direction (anti-shock; the hard floor is >0). |
-| <a id="param-governance_param_max_step_pct"></a>`governance_param_max_step_pct` | 50 percent |  |  | MAX_STEP_PCT: the FORMAL-MODEL proportional per-enactment bound (100·\|Δ\| ≤ pct·\|old\|) proven invariant in Model-side rail; the runtime instantiates the same proportional FORM per-param (e.g. da_deposit_max_step_factor) with its own magnitude. |
+| <a id="param-da_endpoint_deposit"></a>`da_endpoint_deposit` | VFY (= 1 FLOP) | [§13.0](#130-degraded-state-settlement-policy-normative) |  | Refundable anti-spam deposit held while a validator's DA serving endpoint announcement exists in DaRegistry. 1 VFY = 1 FLOP. Held under HoldReason; released in full on clear_endpoint. |
+| <a id="param-da_max_endpoint_bytes"></a>`da_max_endpoint_bytes` | 256 bytes | [§13.0](#130-degraded-state-settlement-policy-normative) |  | Maximum UTF-8 byte length of a validator DA serving endpoint URL stored in DaRegistry (e.g. 'http://host:7000'). |
+| <a id="param-validator_stake_value_coupled_floor"></a>`validator_stake_value_coupled_floor` | dynamic FLOP | [§13.0](#130-degraded-state-settlement-policy-normative) | D-0413 | D-0413 (C5): governance-retargeted value-coupled stake floor k·V_booked (storage ValueCoupledStakeFloor, default 0 = baseline-identical). |
+| <a id="param-security_kappa_extractable"></a>`security_kappa_extractable` | 0.2 dimensionless | [§13.0](#130-degraded-state-settlement-policy-normative) | DEC-5 | ASSUMPTION — NOT a theorem; a governance/DEC-5 risk input. κ = fraction of realized value V_booked a successful AlephBFT safety break extracts; the lever the value-coupled stake floor rests on (k ≥ m·κ/(θ·N·σ·δ), linear in κ — k_threshold_scales_with_kappa). |
+| <a id="param-da_deposit_max_step_factor"></a>`da_deposit_max_step_factor` | 100 ratio | [§14.1](#141-requirements) |  | pallet_da_registry MAX_DEPOSIT_STEP_FACTOR: a single set_deposit_per_byte call may move the deposit ≤100× in either direction (anti-shock; the hard floor is >0). |
+| <a id="param-governance_param_max_step_pct"></a>`governance_param_max_step_pct` | 50 percent | [§14.1](#141-requirements) |  | MAX_STEP_PCT: the FORMAL-MODEL proportional per-enactment bound (100·\|Δ\| ≤ pct·\|old\|) proven invariant. |
 | <a id="param-da_serve_or_slash_percent"></a>`da_serve_or_slash_percent` | 1 percent | [§5.3](#53-the-verified-task-footprint--sovereign-da) | D-0402 | Serve-or-slash Liveness bound: a validator failing a DA audit is slashed ≤1% (bounded, not fraud). yellowpaper §5.3. |
 | <a id="param-slash_liveness_percent"></a>`slash_liveness_percent` | 1 percent | [§13.2](#132-validator-consensus--da--leader-duties) | D-0409 | Liveness fault slash (jail > 300 blk). yellowpaper §13.2. |
 | <a id="param-slash_equivocation_lone_percent"></a>`slash_equivocation_lone_percent` | 50 percent | [§13.2](#132-validator-consensus--da--leader-duties) | D-0420 | Lone equivocation slash (correlated Eth2-style curve; +50% returned after 180 d, ≥1/3 correlated → 100%). yellowpaper §13.2. |
@@ -3709,10 +3709,10 @@ the active validators enforcing the producer-side v1 derivation before attesting
 | `TranscriptLeafVersion` | `V0=0`, `V1=1`, `V2=2`, `V3=3` | mandatory SCALE enum at the start of every current settlement/dispute turn container; unknown tags reject; verifier selects exactly one preimage and never retries |
 | `VerifiedTurn` | ordered: `leaf_version`, `turn_index:u32`, `h_in:H256`, `h_out:H256`, `g_n:u128`, `decode_policy_hash:H256`, `h_ids:H256`, `toploc_commitment_hash:H256`, `miner_recv_ms:u64`, `miner_done_ms:u64`, `latency_ms:u64`, `enclave_sig:[u8;64]`, `merkle_path:Vec<(H256,bool)>` | SCALE size `269 + compact_len(L) + 33L` B for path length `L` |
 | `h_ids` v1 | `prompt_ids:u32[]`, `generated_ids:u32[]` | `blake2_256(prompt_count:u32LE ‖ prompt_ids:u32LE… ‖ generated_count:u32LE ‖ generated_ids:u32LE…)`; both counts are fixed-width `u32LE`, not SCALE `Compact`; each token ID is `u32LE` |
-| V3 leaf | `blake2_256(channel_id ‖ turn_index:u32LE ‖ h_in ‖ h_out ‖ g_n:u128LE ‖ decode_policy_hash ‖ h_ids ‖ toploc_commitment_hash ‖ miner_recv_ms:u64LE ‖ miner_done_ms:u64LE ‖ latency_ms:u64LE)` | 236 B preimage; signature is over the 32 B leaf hash; `h_ids` MUST be non-zero in FCC4 |
+| V3 leaf | `blake2_256(channel_id ‖ turn_index:u32LE ‖ h_in ‖ h_out ‖ g_n:u128LE ‖ decode_policy_hash ‖ h_ids ‖ toploc_commitment_hash ‖ miner_recv_ms:u64LE ‖ miner_done_ms:u64LE ‖ latency_ms:u64LE)` | 236 B preimage; signature is over the 32 B leaf hash; `h_ids` and `toploc_commitment_hash` MUST be non-zero in FCC4 |
 | V2 leaf | V3 without `h_ids` and `toploc_commitment_hash` | 172 B preimage; binds decode policy but does not claim V3 token-ID/TOPLOC binding (#1404) |
 | V1 leaf | V2 without `decode_policy_hash` | 140 B preimage; legacy only where the channel has no `ChannelDecodePolicies` marker (#686) |
-| V0 leaf | V1 without the three timing fields | 116 B preimage; legacy only where the channel has no `ChannelDecodePolicies` marker |
+| V0 leaf | V1 without the three timing fields | 116 B preimage; timing fields MUST be zero in FCC4; legacy only where the channel has no `ChannelDecodePolicies` marker |
 | Merkle path | each item `(sibling_hash:H256, sibling_is_left:bool)`; node = `blake2_256(left ‖ right)` | leaf order is turn order; left is first; an odd last node is duplicated; empty root is `00×32`; single-leaf root is the leaf; node has no prefix because its 64 B preimage is length-disjoint from every leaf preimage |
 | per-turn agent ack | sr25519 under the channel's agent key over `channel_id ‖ turn_index:u32LE ‖ leaf_hash ‖ agent_send_ms:u64LE ‖ agent_recv_ms:u64LE` | counter-signs the leaf hash and both timing inputs; distinct from agent receipt v1; implemented by `turn_ack_message` in `sdk/typescript/src/compute-channel/transcript.ts` and `sdk/rust-compute-channel/src/transcript.rs` |
 | agent receipt v1 | sr25519 over `"FLOP/COMPUTE_CHANNEL/RECEIPT" ‖ 01 ‖ channel_id ‖ final_root ‖ aggregate_gn:u128LE ‖ payable:u128LE` | authorizes the exact channel, root, aggregate, and settlement amount; `payable` is a `u128LE` count of 10⁻¹⁸ FLOP base units and is the gross receipt-bound settlement amount, derived as full reserved escrow for cooperative `settle`, the R12.1d tariff `P` for `force_settle`, or the stored `contract_payment` override for a forward channel (R12.1i); at settlement, `payable` is split 85% to the miner ([`inference_fee_miner_share_ppt`](#param-inference_fee_miner_share_ppt)) and 15% to validators ([`inference_fee_validator_share_ppt`](#param-inference_fee_validator_share_ppt)), from which the 1% audit earmark ([`audit_fee_split_ppm`](#param-audit_fee_split_ppm)) is funded (D-0525), and a forward channel additionally refunds unearned availability to the buyer; current channels only |
@@ -3747,8 +3747,8 @@ h_ids:H256 ‖ toploc_hash:H256 ‖ recv:u64LE ‖ done:u64LE ‖ latency:u64LE 
 [‖ send:u64LE ‖ receive:u64LE ‖ agent_sig:[u8;64]]`, where `agent_sig` signs `channel_id ‖
 turn_index:u32LE ‖ leaf_hash ‖ send:u64LE ‖ receive:u64LE` under the channel's agent key. `has_*` is
 exactly 0/1. FCC4 version/field consistency
-is fail-closed: V0/V1 have no policy and zero V3 fields; V2 has a policy and zero V3 fields; V3 has a policy
-and non-zero `h_ids`. Decoders consume exactly the declared turns and reject trailing/truncated bytes. Rust/TS
+is fail-closed: V0 has no policy, zero V3 fields, and zero timing fields; V1 has no policy and zero V3 fields; V2 has a policy and zero V3 fields; V3 has a policy
+and non-zero `h_ids` and `toploc_commitment_hash`. Decoders consume exactly the declared turns and reject trailing/truncated bytes. Rust/TS
 may read historical unprefixed/FCC2/FCC3 blobs only to migrate them into an explicit in-memory leaf version;
 they never make an on-chain version choice from signature success.
 

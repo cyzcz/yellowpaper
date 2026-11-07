@@ -803,6 +803,7 @@ parameters:
       Share of a finalized post-timeout HTLC resolution burned before payout.
       Default zero preserves the current HTLC split until governance arms it
       through a runtime upgrade. An armed share also applies to timeout refunds.
+      yellowpaper §10.1 (R10.1).
     implementations:
       - { file: pallets/runtime/zkverify/src/lib.rs, expect: "pub const HasHtlcBurnSharePpt: u32 = 0;" }
       - { file: pallets/runtime/zkverify/src/lib.rs, expect: "type HtlcBurnShare = HasHtlcBurnSharePpt;" }
@@ -1964,7 +1965,7 @@ reference:
     unit: FLOP
     site: "ai-agent-simulator/params.yaml"
     description: "Autonomous-agent scenario daily cap in the simulator; the runtime stores each wallet's chosen daily_cap at create_wallet rather than enforcing a global 500 FLOP constant; yellowpaper §6.2."
-  - { name: agent_per_tx_limit,          value: 100,        unit: FLOP, site: "ai-agent-simulator/params.yaml", mutability: source-only, on_chain: {source_only: 'Model, SDK, or documented value; no exported on-chain constant.'} }
+  - { name: agent_per_tx_limit,          value: 100,        unit: FLOP, site: "ai-agent-simulator/params.yaml", note: "Per-transaction spend limit for an autonomous agent session in the simulator; the runtime stores each session's chosen per_tx_limit at create_session rather than enforcing a global 100 FLOP constant. yellowpaper §6.2.", mutability: source-only, on_chain: {source_only: 'Model, SDK, or documented value; no exported on-chain constant.'} }
   # ---- Designed-not-built degraded-state limits ----
   - { name: attestation_outage_pause_cap_blocks, value: 14_400, unit: blocks, note: "Designed-not-built 4 h cap on per-channel pauses of attestation-dependent clocks under R13.0e / O1; no runtime or pallet implementation site. yellowpaper §13.0.", mutability: source-only, on_chain: {source_only: 'Model, SDK, or documented value; no exported on-chain constant.'} }
   - name: da_endpoint_deposit
