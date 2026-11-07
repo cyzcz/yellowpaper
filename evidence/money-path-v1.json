@@ -539,11 +539,14 @@
         "balances": {
           "escrow": "1000",
           "miner": "0",
+          "validator_pool": "0",
           "audit_pool": "0"
         },
         "storage": {
           "channel_state": "Open"
         },
+        "inference_fee_miner_share_ppt": 850,
+        "inference_fee_validator_share_ppt": 150,
         "audit_fee_split_ppm": 10000
       },
       "extrinsics": [
@@ -557,8 +560,8 @@
         }
       ],
       "alternatives": [
-        "Full escrow is net miner entitlement, without a carve.",
-        "Full escrow is gross before an audit-pool carve; payer, rounding and finalize applicability require ratification."
+        "D-0525 split: 85% miner (850) and 15% validator leg (150, of which 1% = 10 funds audit_pool and 14% = 140 distributes to validator_pool); canonical rounding/dust rule for non-divisible and finalize amounts pending ratification (#79, #148).",
+        "Pre-D-0525 mock baseline: full escrow is gross before a 1% audit-pool carve (or net miner entitlement without a carve)."
       ]
     },
     {
@@ -578,11 +581,14 @@
         "balances": {
           "escrow": "1001",
           "miner": "0",
+          "validator_pool": "0",
           "audit_pool": "0"
         },
         "storage": {
           "channel_state": "Open"
         },
+        "inference_fee_miner_share_ppt": 850,
+        "inference_fee_validator_share_ppt": 150,
         "audit_fee_split_ppm": 10000
       },
       "extrinsics": [
@@ -596,8 +602,8 @@
         }
       ],
       "alternatives": [
-        "Full escrow is net miner entitlement, without a carve.",
-        "Full escrow is gross before an audit-pool carve; payer, rounding and finalize applicability require ratification."
+        "D-0525 split: 85% miner and 15% validator leg (with 1% audit_fee_split_ppm funded from the validator leg); canonical rounding order and dust recipient for non-divisible payable (1001 * 850 / 1000 = 850.85) pending ratification (#79, #148).",
+        "Pre-D-0525 mock baseline: full escrow is gross before a 1% audit-pool carve (or net miner entitlement without a carve)."
       ]
     },
     {
@@ -617,11 +623,14 @@
         "balances": {
           "escrow": "1",
           "miner": "0",
+          "validator_pool": "0",
           "audit_pool": "0"
         },
         "storage": {
           "channel_state": "Open"
         },
+        "inference_fee_miner_share_ppt": 850,
+        "inference_fee_validator_share_ppt": 150,
         "audit_fee_split_ppm": 10000
       },
       "extrinsics": [
@@ -635,8 +644,8 @@
         }
       ],
       "alternatives": [
-        "Full escrow is net miner entitlement, without a carve.",
-        "Full escrow is gross before an audit-pool carve; payer, rounding and finalize applicability require ratification."
+        "D-0525 split: 85% miner and 15% validator leg (with 1% audit_fee_split_ppm funded from the validator leg); canonical rounding order and dust recipient for 1 base unit pending ratification (#79, #148).",
+        "Pre-D-0525 mock baseline: full escrow is gross before a 1% audit-pool carve (or net miner entitlement without a carve)."
       ]
     },
     {

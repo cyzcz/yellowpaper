@@ -27,11 +27,11 @@ verification jobs run on draft and synchronize pushes under shared verification 
 
 The five `compute-channel` fixtures cover D-0422 / R12.1d: zero work, dust tariff with a non-divisible unused
 remainder, full tariff use, atomic rejection above escrow, and miner non-delivery. They explicitly
-use the existing mock's **zero audit split**, available published DA, one-base-unit tariff and
+use the existing mock's **pre-D-0525 100%-miner payout (zero 15% validator fee split) and zero audit split**, available published DA, one-base-unit tariff and
 20% refund penalty. R11.2b keeps the historical `TotalGnCredited` counter unchanged by channel
 payouts; these fixtures begin and end with zero public work credit. The source pin includes the
 payment-only settlement rule landed in #2314, separately from D-0422's amount split. These are
-gross-accounting fixtures, not a ratification of the live audit carve, tariff calibration,
+gross-accounting fixtures, not a ratification of the live 85/15 validator/audit carve (D-0525), tariff calibration,
 force/cooperative dominance, or DA-loss settlement. The published
 transcript avoids the separate publish-or-forfeit path. Signature and Merkle fixtures are built by
 the existing runtime-test helpers; this corpus pins the amounts and transitions, not their bytes.
@@ -70,7 +70,7 @@ Nineteen pending fixtures have no `expected` payouts. `alternatives` records ope
 | Family | Seeds | Decision owner |
 | --- | --- | --- |
 | HTLC redeem | `L=10000`, `A=6200`, `A=L`, `A>L`; fixed lock versus metered redemption/residual | [#1796](https://github.com/flop-labs/flop-core/issues/1796), from [yellowpaper#71](https://github.com/flop-labs/yellowpaper/issues/71) |
-| Cooperative settle | `E=1000`, non-divisible `1001`, dust `1`; net full escrow versus gross audit carve | [#1905](https://github.com/flop-labs/flop-core/issues/1905), from [yellowpaper#79](https://github.com/flop-labs/yellowpaper/issues/79) |
+| Cooperative settle | `E=1000`, non-divisible `1001`, dust `1`; D-0525 85% miner / 15% validator split (with 1% audit earmark inside the validator leg) and rounding/dust allocation versus legacy pre-D-0525 net/gross carve | [#1905](https://github.com/flop-labs/flop-core/issues/1905), from [yellowpaper#79](https://github.com/flop-labs/yellowpaper/issues/79) |
 | Force dominance | delivered `G_n=10¹⁰`, `E=1000 FLOP`; mode/caller binding and priced tariff | [#1905](https://github.com/flop-labs/flop-core/issues/1905), rate owned by [#1610](https://github.com/flop-labs/flop-core/issues/1610) |
 | DA-loss terminal | no prefix and a co-signed prefix; D-0430 full refund versus a superseding prefix rule | [#1948](https://github.com/flop-labs/flop-core/issues/1948) |
 | R12.2 slot release | settle / expire / timeout / fraud release once; finalize release versus retention remains open in the cited rule | [#2649](https://github.com/flop-labs/flop-core/issues/2649), from [yellowpaper#48](https://github.com/flop-labs/yellowpaper/issues/48) |

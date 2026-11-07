@@ -7,9 +7,9 @@ Protocol scope: [yellowpaper §2.3](../yellowpaper.md#23-safety--the-three-sub-p
 
 The deployed sampler draws distinct eligible identities sequentially using stake-weighted intervals;
 the ideal proportional-draw model and concrete PRNG caveats are separated below. Aggregate attacker stake alone does not determine its
-seat-count distribution. The reproducible counterexample has 40 attacker identities at 100,000
-stake each and 61 honest identities at 300,000 each. Every identity meets the 100,000 eligibility
-floor and has recent verified work. Drawing 100 of the 101 identities omits exactly one identity, so
+seat-count distribution. The reproducible counterexample has 40 attacker identities at 1,200,000
+stake each and 61 honest identities at 3,600,000 each. Every identity meets the 1,200,000 eligibility
+floor (`validator_min_stake`, D-0440) and has recent verified work. Drawing 100 of the 101 identities omits exactly one identity, so
 the committee always contains 39 or 40 attacker seats. The attacker owns 40/223 (about 17.94%) of
 stake, yet the probability of violating AlephBFT's strict `3f < n` premise is exactly one: failure
 begins at 34 attacker seats for `n = 100`.

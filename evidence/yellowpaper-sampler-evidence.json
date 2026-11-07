@@ -15,7 +15,7 @@
     }
   },
   "draws": 100,
-  "eligibility_floor": 100000,
+  "eligibility_floor": 1200000,
   "failure_probability": {
     "decimal": 1.0,
     "exact": "1/1"
@@ -26,13 +26,13 @@
       "attacker": true,
       "count": 40,
       "name": "attacker",
-      "weight": 100000
+      "weight": 1200000
     },
     {
       "attacker": false,
       "count": 61,
       "name": "honest",
-      "weight": 300000
+      "weight": 3600000
     }
   ],
   "implementation_mapping": {

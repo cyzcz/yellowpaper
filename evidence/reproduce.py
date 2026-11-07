@@ -1098,7 +1098,7 @@ def audit_analysis() -> dict:
 def capacity_evidence_status() -> dict:
     return {
         "claim_disposition": {
-            "status": "removed from the v0.5 conformance profile",
+            "status": "proposed for withdrawal from the v0.5 conformance profile (D-0502, pending ratification)",
             "removed_claims": [
                 "125,000-byte propagation budget",
                 "96 steady / 128 burst session-control transactions per block",
