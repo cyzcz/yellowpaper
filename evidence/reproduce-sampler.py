@@ -74,8 +74,8 @@ def fraction_record(value: Fraction) -> dict[str, str | float]:
 
 def counterexample_report() -> dict[str, object]:
     groups = (
-        Group("attacker", count=40, weight=100_000, attacker=True),
-        Group("honest", count=61, weight=300_000, attacker=False),
+        Group("attacker", count=40, weight=1_200_000, attacker=True),
+        Group("honest", count=61, weight=3_600_000, attacker=False),
     )
     draws = 100
     threshold = bft_failure_seats(draws)
@@ -103,7 +103,7 @@ def counterexample_report() -> dict[str, object]:
         },
         "voting_unit": "one distinct eligible identity per committee seat",
         "groups": [group.__dict__ for group in groups],
-        "eligibility_floor": 100_000,
+        "eligibility_floor": 1_200_000,
         "draws": draws,
         "strict_engine_premise": "3 * attacker_seats < realized_committee_size",
         "failure_threshold_seats": threshold,

@@ -59,7 +59,7 @@
         "sub-second finality latency"
       ],
       "replacement": "No capacity or latency guarantee. Runtime admission remains jointly byte-, weight-, state-, and validity-gated.",
-      "status": "removed from the v0.5 conformance profile"
+      "status": "proposed for withdrawal from the v0.5 conformance profile (D-0502, pending ratification)"
     },
     "network_workload_matrix": {
       "hardware_resource_profile": null,
